@@ -17,9 +17,8 @@ import {
 } from "@/lib/fetchSpaceXAPI";
 import Dragon from "@/components/dragon/Dragon";
 import { BannerData, dragonData, launchPad, mediaData } from "@/lib/types";
-import SkeletonLoader from "@/components/skeleton/SkeletonLoader";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const padData: launchPad[] = await fetchSpaceXAPILaunch();
   const dragonsData: dragonData[] = await fetchSpaceXAPIDragon();
   const mediaData: mediaData[] = await fetchSpaceXAPIMedia();
@@ -33,7 +32,6 @@ export async function getStaticProps() {
       dragonsData,
       mediaData,
     },
-    revalidate: 60,
   };
 }
 

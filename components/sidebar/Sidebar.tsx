@@ -1,8 +1,5 @@
-import React from "react";
-
 let SideBarItems = [
   "crew",
-  "info",
   "launches",
   "landpads",
   "payloads",
@@ -21,7 +18,7 @@ const Sidebar = ({ showSide }: SidebarProps) => {
   return (
     <>
       <nav
-        className={`z-50 fixed h-screen w-[300px] bg-black top-0 transition duration-700 ease-in-out -left-[300px] ${
+        className={`z-50 fixed h-screen w-[275px] bg-black top-0 transition duration-700 ease-in-out -left-[300px] ${
           showSide ? "translate-x-[300px]" : ""
         }`}
       >
@@ -41,7 +38,6 @@ const Sidebar = ({ showSide }: SidebarProps) => {
             );
           })}
         </div>
-        <div className="absolute right-0 w-4 h-full bg-white"></div>
       </nav>
     </>
   );

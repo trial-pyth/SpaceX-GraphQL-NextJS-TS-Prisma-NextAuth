@@ -56,30 +56,20 @@ const Navbar = ({ children }: Props) => {
       >
         <div className="container flex justify-between w-screen mx-0 max-w-none">
           <div className="relative left flex text-sm font-light items-start px-5 mt-4 ">
-            <div
-              className="hamburger flex flex-col justify-between w-5 h-4 cursor-pointer mr-4 transition duration-300 ease-in-out"
-              onClick={toggleSide}
-            >
-              <span
-                className={`w-full rounded-sm h-0.5  bg-white ${
-                  showSide ? "origin-left rotate-45" : ""
-                }  `}
-              ></span>
-              <span
-                className={`w-full rounded-sm h-0.5 ${
-                  showSide ? "collapse" : "bg-white"
-                }`}
-              ></span>
-              <span
-                className={`w-full  rounded-sm h-0.5 bg-white ${
-                  showSide ? "origin-left -rotate-45" : ""
-                }  `}
-              ></span>
-            </div>
+            {router.pathname === "/" && (
+              <div
+                className="hamburger flex flex-col justify-between w-5 h-4 cursor-pointer mr-4 transition duration-300 ease-in-out"
+                onClick={toggleSide}
+              >
+                <span className="w-full rounded-sm h-0.5  bg-white"></span>
+                <span className="w-full rounded-sm h-0.5 bg-white"></span>
+                <span className="w-full  rounded-sm h-0.5 bg-white"></span>
+              </div>
+            )}
             {NavProps.map((item, index) => {
               return (
                 <span key={index}>
-                  <Link className="mx-2" href="/">
+                  <Link className="mx-2 hover:font-bold" href="/">
                     {item}
                   </Link>
                 </span>
