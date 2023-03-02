@@ -6,7 +6,7 @@ export function dataCondenser(
     case "crew":
       return [shortData?.name, shortData?.agency];
     case "launches":
-      return [shortData?.name, Number(shortData?.date_utc.split("-")[0])];
+      return [shortData?.name, Number(shortData?.date_utc?.split("-")[0])];
     case "landpads":
       return [shortData?.name, shortData?.region];
     case "payloads":
