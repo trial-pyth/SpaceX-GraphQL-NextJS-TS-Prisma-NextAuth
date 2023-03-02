@@ -32,13 +32,13 @@ const Login = () => {
         </Link>
       </div>
 
-      <main className="mx-auto  h-[500px] w-[100vw] flex items-center justify-center bg-login_feature bg-no-repeat backdrop-blur-sm opacity-90 object-cover">
+      <main className="mx-auto h-screen w-[100vw] flex items-center justify-center bg-login_feature bg-no-repeat backdrop-blur-sm opacity-90 object-cover">
         <form className="w-1/3 h-2/3 rounded-sm flex flex-col gap-y-1 items-center justify-evenly bg-slate-900/95 z-50">
           <h1 className="text-xl font-bold tracking-wider">
             Sign in using email
           </h1>
           <label className="block ">
-            <span className="block text-2xl  tracking-wider font-bold text-white">
+            <span className="block text-2xl tracking-wider font-bold text-white">
               Email
             </span>
 

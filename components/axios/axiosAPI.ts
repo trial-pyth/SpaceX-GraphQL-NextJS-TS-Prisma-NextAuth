@@ -5,7 +5,7 @@ export const spacexAPI = axios.create({
 });
 
 export const getSpaceXData = async (
-  exploreItem: string = "crew",
+  exploreItem: string,
   options = {
     pageNum: 1,
     limit: 5,

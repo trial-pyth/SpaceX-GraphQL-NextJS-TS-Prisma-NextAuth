@@ -1,6 +1,6 @@
 type Props = {};
 
-const Skeleton = (props: Props) => {
+const SkeletonLoader = (props: Props) => {
   return (
     <div className="space-y-5 rounded-2xl h-full w-full bg-white/5 p-4">
       <div className="animate-pulse rounded-lg w-full h-1/2 bg-rose-100/20"></div>
@@ -14,4 +14,4 @@ const Skeleton = (props: Props) => {
   );
 };
 
-export default Skeleton;
+export default SkeletonLoader;
