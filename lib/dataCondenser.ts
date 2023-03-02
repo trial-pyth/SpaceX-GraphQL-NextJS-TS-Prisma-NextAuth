@@ -19,8 +19,8 @@ export function dataCondenser(
       return [shortData?.name, shortData?.type];
     case "starlink":
       return [
-        shortData?.spaceTrack.OBJECT_NAME,
-        shortData?.spaceTrack.LAUNCH_DATE.split("-")[0],
+        shortData?.spaceTrack?.OBJECT_NAME,
+        shortData?.spaceTrack?.LAUNCH_DATE.split("-")[0],
       ];
     default:
       return [];
