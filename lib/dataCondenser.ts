@@ -1,7 +1,19 @@
 export function dataCondenser(
   queryItem: string | string[] | undefined,
-  shortData: {}
-) {
+  shortData: {
+    name?: string;
+    agency?: string;
+    date_utc?: string;
+    region?: string;
+    type?: string;
+    serial?: string;
+    cost_per_launch?: number;
+    spaceTrack?: {
+      OBJECT_NAME?: string;
+      LAUNCH_DATE?: string;
+    };
+  }
+): [string | undefined, number | string | undefined] | [] {
   switch (queryItem) {
     case "crew":
       return [shortData?.name, shortData?.agency];
@@ -20,7 +32,7 @@ export function dataCondenser(
     case "starlink":
       return [
         shortData?.spaceTrack?.OBJECT_NAME,
-        shortData?.spaceTrack?.LAUNCH_DATE.split("-")[0],
+        shortData?.spaceTrack?.LAUNCH_DATE?.split("-")[0],
       ];
     default:
       return [];

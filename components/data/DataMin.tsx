@@ -1,17 +1,16 @@
 import { dataCondenser } from "@/lib/dataCondenser";
 import React from "react";
 
-type DataMinProps = {};
-
 const DataMin = React.forwardRef(({ shortData, queryItem }, ref) => {
-  console.log({ shortData, queryItem });
+  // console.log({ shortData, queryItem });
+  // console.log(searchTerm);
 
-  const outputData = dataCondenser(queryItem, shortData);
+  // const outputData = dataCondenser(queryItem, shortData);
 
   const dataBody = (
     <>
-      <span className="text-xl">{outputData[0]}</span>
-      <p>{outputData[1]}</p>
+      <span className="text-xl">{shortData[0]}</span>
+      <p>{shortData[1]}</p>
     </>
   );
 

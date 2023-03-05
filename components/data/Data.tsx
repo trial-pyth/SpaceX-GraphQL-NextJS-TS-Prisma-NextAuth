@@ -5,6 +5,7 @@ import { useState, useRef, useCallback, useEffect, ReactElement } from "react";
 import DataMin from "./DataMin";
 import { useInfiniteQuery } from "react-query";
 import { getSpaceXData } from "../axios/axiosAPI";
+import { dataCondenser } from "@/lib/dataCondenser";
 
 type DataPageProps = {
   queryItem?: string | string[] | undefined;
@@ -13,7 +14,7 @@ type DataPageProps = {
 
 const Data = ({ queryItem, itemInfo }: DataPageProps) => {
   // console.log(queryItem);
-  // const [showScroll, setShowScroll] = useState(true);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const {
     fetchNextPage,
     hasNextPage,
@@ -42,6 +43,7 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
   useEffect(() => {
     if (queryItem !== undefined) {
       remove();
+      setSearchTerm("");
       refetch();
     }
   }, [queryItem]);
@@ -72,26 +74,48 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
 
   if (status === "error") return <p>Error: {error?.message}</p>;
 
+  // console.log(data);
+
   const content = data?.pages.map((pg) => {
     // console.log(pg);
     return pg.data.docs.map((data, i) => {
       // console.log({ data });
+
+      const outputData = dataCondenser(queryItem, data);
+      // console.log(outputData);
+
+      // const filteredData = outputData.filter((data) => {
+      //   // console.log(data);
+      //   return data[0]?.toLowerCase();
+      // });
+
+      // console.log(filteredData);
+
       if (pg.data.docs.length === i + 1) {
         return (
           <DataMin
             ref={lastDataRef}
             key={i}
-            shortData={data}
+            shortData={outputData}
             queryItem={queryItem}
           />
         );
       }
 
-      return <DataMin key={i} shortData={data} queryItem={queryItem} />;
+      return <DataMin key={i} shortData={outputData} queryItem={queryItem} />;
     });
   });
 
-  // console.log(hasNextPage);
+  const render = content?.filter((a) => {
+    return a.filter((b) => {
+      // console.log("b", b.props.shortData[0].toLowerCase());
+      // return b?.props?.shortData[0]
+      //   ?.toLowerCase()
+      //   .includes(searchTerm.toLowerCase());
+    });
+  });
+
+  // console.log(render);
 
   return (
     <>
@@ -101,6 +125,8 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
           <input
             type="search"
             className="w-full bg-slate-600/50 border-none px-3 py-2 border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-gray-400 focus:ring-gray-400 block rounded-r-md sm:text-sm focus:ring-1 "
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
