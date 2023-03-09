@@ -2,7 +2,7 @@ import Layout from "@/components/layout/Layout";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import ExploreLayout from "./explore/components/ExploreLayout";
+import ExploreLayout from "../layouts/ExploreLayout";
 
 export default function App({ Component, pageProps, ...appProps }: AppProps) {
   if ([`/login`].includes(appProps.router.pathname))

@@ -2,17 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-
-export const SideBarItems = [
-  "crew",
-  "launches",
-  "landpads",
-  "payloads",
-  "capsules",
-  "rockets",
-  "ships",
-  "starlink",
-];
+import { SideBarItems } from "@/lib/types";
 
 const ExploreTab = () => {
   const router = useRouter();

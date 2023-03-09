@@ -48,3 +48,18 @@ export interface mediaData {
   };
   date: number;
 }
+
+export const SideBarItems = [
+  "crew",
+  "launches",
+  "landpads",
+  "payloads",
+  "capsules",
+  "rockets",
+  "ships",
+  "starlink",
+];
+
+export interface QueryItemType {
+  queryItem:string|string[]|undefined
+}

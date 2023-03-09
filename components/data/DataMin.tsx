@@ -10,16 +10,16 @@ const DataMin = React.forwardRef(({ shortData, queryItem }, ref) => {
   const dataBody = (
     <>
       <span className="text-xl">{shortData[0]}</span>
-      <p>{shortData[1]}</p>
+      <p className="opacity-70">{shortData[1]}</p>
     </>
   );
 
   const content = ref ? (
-    <div ref={ref} className="h-[50px]">
+    <div ref={ref} className="h-[50px] mt-3">
       {dataBody}
     </div>
   ) : (
-    <div className="h-[50px]">{dataBody}</div>
+    <div className="h-[50px] mt-3">{dataBody}</div>
   );
 
   return content;

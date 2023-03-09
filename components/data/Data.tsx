@@ -6,13 +6,9 @@ import DataMin from "./DataMin";
 import { useInfiniteQuery } from "react-query";
 import { getSpaceXData } from "../axios/axiosAPI";
 import { dataCondenser } from "@/lib/dataCondenser";
+import { QueryItemType } from "@/lib/types";
 
-type DataPageProps = {
-  queryItem?: string | string[] | undefined;
-  itemInfo?: string;
-};
-
-const Data = ({ queryItem, itemInfo }: DataPageProps) => {
+const Data = ({ queryItem }: QueryItemType) => {
   // console.log(queryItem);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const {
@@ -56,7 +52,7 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
       // console.log({ data });
       if (isFetchingNextPage) return;
 
-      if (intObserver.current) intObserver.current.disconnect();
+      if (intObserver.current) intObserver?.current?.disconnect();
 
       intObserver.current = new IntersectionObserver((datas) => {
         if (datas[0].isIntersecting && hasNextPage) {
@@ -65,7 +61,7 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
         }
       });
 
-      if (data) intObserver.current.observe(data);
+      if (data) intObserver?.current?.observe(data);
     },
     [isFetchingNextPage, fetchNextPage, hasNextPage]
   );
@@ -74,22 +70,13 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
 
   if (status === "error") return <p>Error: {error?.message}</p>;
 
-  // console.log(data);
-
   const content = data?.pages.map((pg) => {
     // console.log(pg);
     return pg.data.docs.map((data, i) => {
-      // console.log({ data });
+      // console.log({ data, queryItem });
 
       const outputData = dataCondenser(queryItem, data);
       // console.log(outputData);
-
-      // const filteredData = outputData.filter((data) => {
-      //   // console.log(data);
-      //   return data[0]?.toLowerCase();
-      // });
-
-      // console.log(filteredData);
 
       if (pg.data.docs.length === i + 1) {
         return (
@@ -105,17 +92,23 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
       return <DataMin key={i} shortData={outputData} queryItem={queryItem} />;
     });
   });
+  // console.log({ content });
 
-  const render = content?.filter((a) => {
-    return a.filter((b) => {
-      // console.log("b", b.props.shortData[0].toLowerCase());
-      // return b?.props?.shortData[0]
-      //   ?.toLowerCase()
-      //   .includes(searchTerm.toLowerCase());
-    });
+  const render: any[] | undefined = [];
+
+  content?.map((a) => {
+    render?.push(
+      a.filter((b) => {
+        // console.log("b", b?.props?.shortData[0]?.toLowerCase());
+        return b?.props?.shortData[0]
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      })
+    );
+
+    // console.log({ a });
   });
-
-  // console.log(render);
+  // console.log({ render });
 
   return (
     <>
@@ -132,16 +125,16 @@ const Data = ({ queryItem, itemInfo }: DataPageProps) => {
 
         <div
           className="relative w-[90%] mt-8 rounded-lg mx-auto h-[63%] overflow-y-auto 
-      overflow-x-hidden bg-slate-600/30  grid grid-cols-1 gap-5 px-3 pt-5 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-400"
+      overflow-x-hidden bg-slate-600/30 justify-start  flex flex-col px-3 pt-5 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-400"
         >
           {hasNextPage && (
-            <span className="sticky top-0 right-0 animate-bounce bg-sky-900/70 text-fuchsia-200/80 mx-auto p-1 rounded-full">
+            <span className="sticky top-0 right-0 h-8 w-8 animate-bounce bg-sky-900/70 text-fuchsia-200/80 mx-auto p-1 rounded-full">
               <span className="mx-auto">
                 <ArrowDownwardSharp />
               </span>
             </span>
           )}
-          {content}
+          {render}
         </div>
 
         <div className="absolute right-[20vw] top-0 bg-gradient-to-t from-black via-slate-300 to-black w-[1px] h-screen"></div>
