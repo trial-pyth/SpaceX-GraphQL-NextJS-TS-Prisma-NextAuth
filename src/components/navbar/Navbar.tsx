@@ -8,23 +8,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { ReactNode } from "react";
 import Sidebar from "../sidebar/Sidebar";
-type Props = {
-  children?: ReactNode;
-  // any props that come into the component
-};
-
+import { useSession, signIn, signOut } from "next-auth/react";
 type NavItems = "HOME" | "LAUNCHES" | "DATA" | "ROADSTER";
 const NavProps: NavItems[] = ["HOME", "LAUNCHES", "DATA", "ROADSTER"];
 
-const Navbar = ({ children }: Props) => {
+const Navbar = () => {
+  const { data: session } = useSession();
   const [showDrop, setShowDrop] = useState<boolean>(false);
   const [isScroll, setIsScroll] = useState<boolean>(false);
   const [showSide, setShowSide] = useState<boolean>(false);
 
   if (typeof window !== "undefined") {
-    // Client-side-only code
     window.onscroll = () => {
       setIsScroll(window.pageYOffset === 0 ? false : true);
       return () => (window.onscroll = null);
@@ -37,6 +32,12 @@ const Navbar = ({ children }: Props) => {
     setShowSide(!showSide);
   };
 
+  const handleSignIn = () => {
+    router.push(`/api/auth/signin/callbackUrl=${router.asPath}`);
+  };
+
+  const handleSignOut = () => signOut({ redirect: false });
+
   return (
     <>
       <div
@@ -47,7 +48,7 @@ const Navbar = ({ children }: Props) => {
       >
         <div className="container flex justify-between w-screen mx-0 max-w-none">
           <div className="relative left flex text-sm font-light items-start px-5 mt-4 ">
-            {router.pathname === "/" && (
+            {router.pathname.includes("explore") === false && (
               <div
                 className="hamburger flex flex-col justify-between w-5 h-4 cursor-pointer mr-4 transition duration-300 ease-in-out"
                 onClick={toggleSide}
@@ -95,12 +96,15 @@ const Navbar = ({ children }: Props) => {
                   showDrop ? "opacity-70" : "opacity-0"
                 }`}
               >
-                <span className="mb-2 transition duration-300 ease-out hover:text-gray-400 cursor-pointer">
-                  <Link href="/api/auth/login">LOGOUT</Link>
-                </span>
-                <span className=" transition duration-300 ease-out hover:text-gray-400 cursor-pointer">
+                <button
+                  onClick={session ? handleSignOut : handleSignIn}
+                  className="mb-2 inline transition duration-300 ease-out hover:text-gray-400 cursor-pointer"
+                >
+                  {session ? "SIGN OUT" : "SIGN IN"}
+                </button>
+                <button className=" transition inline duration-300 ease-out hover:text-gray-400 cursor-pointer">
                   SETTINGS
-                </span>
+                </button>
               </div>
             </div>
           </div>

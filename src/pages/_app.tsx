@@ -2,28 +2,30 @@ import Layout from "../layouts/Layout";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import ExploreLayout from "../layouts/ExploreLayout";
-export default function App({ Component, pageProps, ...appProps }: AppProps) {
-  if ([`/login`].includes(appProps.router.pathname))
-    return <Component {...pageProps} />;
+import { SessionProvider } from "next-auth/react";
 
-  // if ([`/explore`].includes(appProps.router.pathname))
-  //   return (
-  //     <Layout>
-  //       <ExploreLayout>
-  //         <Component {...pageProps} />
-  //       </ExploreLayout>
-  //     </Layout>
-  //   );
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+  ...appProps
+}: AppProps) {
+  if ([`/auth/signin`].includes(appProps.router.pathname))
+    return (
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+    );
 
   return (
     <>
       <Head>
         <title>SpaceX | Daily</title>
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <SessionProvider session={session}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SessionProvider>
     </>
   );
 }

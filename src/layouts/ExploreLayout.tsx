@@ -14,14 +14,12 @@ type ExploreLayoutProps = {
 const ExploreLayout = ({ queryItem }: ExploreLayoutProps) => {
   // console.log(queryItem);
   return (
-    <>
-      <div className="explore-page mt-16 flex">
-        <ExploreTab />
-        <QueryClientProvider client={queryClient}>
-          <Data queryItem={queryItem} />
-        </QueryClientProvider>
-      </div>
-    </>
+    <div className="explore-page mt-16 flex">
+      <ExploreTab />
+      <QueryClientProvider client={queryClient}>
+        <Data queryItem={queryItem} />
+      </QueryClientProvider>
+    </div>
   );
 };
 

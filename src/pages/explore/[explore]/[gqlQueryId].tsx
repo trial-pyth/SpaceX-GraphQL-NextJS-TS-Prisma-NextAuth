@@ -1,6 +1,5 @@
-import Info from "@/components/info/Info";
+import Info from "@/src/components/info/Info";
 import ExploreLayout from "@/src/layouts/ExploreLayout";
-import { QueryItemType } from "@/src/lib/types";
 import type { GetServerSidePropsContext } from "next";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -14,9 +13,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   };
 }
 
-const gqlInfo = (props) => {
+const gqlInfo = (props: { queryItem: string; gqlId: string }) => {
   const { queryItem, gqlId } = props;
-  const {} = props;
   return (
     <>
       <ExploreLayout queryItem={queryItem} />

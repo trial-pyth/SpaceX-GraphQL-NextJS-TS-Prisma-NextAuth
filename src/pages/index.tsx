@@ -15,7 +15,7 @@ export async function getServerSideProps() {
   const dragonsData: dragonData[] = await fetchSpaceXAPIDragon();
   const mediaData: mediaData[] = await fetchSpaceXAPIMedia();
 
-  fetchSpaceXAPIMedia();
+  // fetchSpaceXAPIMedia();
 
   return {
     props: {
