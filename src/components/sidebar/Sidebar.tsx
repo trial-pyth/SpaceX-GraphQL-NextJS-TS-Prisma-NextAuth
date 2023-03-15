@@ -31,14 +31,12 @@ const Sidebar = ({ showSide }: SidebarProps) => {
         <div className="mx-5 mt-6 ml-9 flex flex-col gap-4 uppercase ">
           {SideBarItems.map((item: string, index: number) => {
             return (
-              <Link href={`/explore/${item}`}>
-                <div
-                  key={index}
-                  className="text-white/60 tracking-wider hover:text-white cursor-pointer"
-                >
-                  {item}
-                </div>
-              </Link>
+              <div
+                key={index}
+                className="text-white/60 tracking-wider hover:text-white cursor-pointer"
+              >
+                <Link href={`/explore/${item}`}>{item}</Link>
+              </div>
             );
           })}
         </div>

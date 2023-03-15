@@ -1,20 +1,17 @@
 import { ArrowDownwardSharp, Search } from "@mui/icons-material";
 import Info from "../info/Info";
 import { useState, useRef, useCallback, useEffect, ReactElement } from "react";
-// import useSpaceData from "@/hooks/useSpaceData";
 import DataMin from "./DataMin";
 import { useInfiniteQuery } from "react-query";
 import { getSpaceXData } from "../axios/axiosAPI";
 import { dataCondenser } from "@/src/lib/dataCondenser";
-import { QueryItemType } from "@/src/lib/types";
+import { QueryItemType, ReactQueryItemType } from "@/src/lib/types";
 
 type DataProps = {
   queryItem?: QueryItemType;
 };
 
 const Data = ({ queryItem }: DataProps) => {
-  // console.log(queryItem);
-
   const [searchTerm, setSearchTerm] = useState<string>("");
   const {
     fetchNextPage,
@@ -37,9 +34,6 @@ const Data = ({ queryItem }: DataProps) => {
     }
   );
 
-  // setRenderData(data);
-  // console.log(data);
-
   useEffect(() => {
     if (queryItem !== undefined) {
       remove();
@@ -48,12 +42,9 @@ const Data = ({ queryItem }: DataProps) => {
     }
   }, [queryItem]);
 
-  // console.log(data);
-
   const intObserver = useRef<HTMLDivElement>(null);
   const lastDataRef = useCallback(
     (data: ReactElement) => {
-      // console.log({ data });
       if (isFetchingNextPage) return;
 
       if (intObserver.current) intObserver?.current?.disconnect();
@@ -76,7 +67,7 @@ const Data = ({ queryItem }: DataProps) => {
 
   const content = data?.pages.map((pg) => {
     // console.log(pg);
-    return pg.data.docs.map((data, i) => {
+    return pg.data.docs.map((data: ReactQueryItemType, i: number) => {
       // console.log({ data, queryItem });
 
       const outputData = dataCondenser(queryItem, data);
@@ -109,11 +100,7 @@ const Data = ({ queryItem }: DataProps) => {
           .includes(searchTerm.toLowerCase());
       })
     );
-
-    // console.log({ a });
   });
-  // console.log({ render });
-  // console.log({ data, queryItem });
 
   return (
     <>

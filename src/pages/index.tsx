@@ -50,8 +50,6 @@ export default function Home(props: HomeProps) {
       <Dragon dragonsData={dragonsData} />
 
       <ListSlider title="Media" mediaData={mediaData} display="media" />
-
-      <button onClick={() => signIn("")}>Sign In</button>
     </main>
   );
 }

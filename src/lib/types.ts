@@ -1,3 +1,6 @@
+import { AxiosResponse } from "axios";
+import { InfiniteData } from "react-query";
+
 export type BannerData = {
   title: string;
   subTitle: string;
@@ -60,6 +63,8 @@ export const SideBarItems = [
   "starlink",
 ];
 
-export interface QueryItemType {
-  queryItem:string|string[]|undefined
-}
+export type QueryItemType = string | string[] | undefined;
+
+export type ReactQueryItemType =
+  | InfiniteData<AxiosResponse<any, any>>
+  | undefined;

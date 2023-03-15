@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Sidebar from "../sidebar/Sidebar";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 type NavItems = "HOME" | "LAUNCHES" | "DATA" | "ROADSTER";
 const NavProps: NavItems[] = ["HOME", "LAUNCHES", "DATA", "ROADSTER"];
 
@@ -28,15 +28,21 @@ const Navbar = () => {
 
   const router = useRouter();
 
+  // console.log(session);
+
   const toggleSide = () => {
     setShowSide(!showSide);
   };
 
   const handleSignIn = () => {
+    setShowDrop(!showDrop);
     router.push(`/api/auth/signin/callbackUrl=${router.asPath}`);
   };
 
-  const handleSignOut = () => signOut({ redirect: false });
+  const handleSignOut = () => {
+    signOut({ redirect: false });
+    setShowDrop(!showDrop);
+  };
 
   return (
     <>
@@ -47,7 +53,7 @@ const Navbar = () => {
   `}
       >
         <div className="container flex justify-between w-screen mx-0 max-w-none">
-          <div className="relative left flex text-sm font-light items-start px-5 mt-4 ">
+          <div className="relative left flex text-sm font-light items-start px-5 mt-5 ">
             {router.pathname.includes("explore") === false && (
               <div
                 className="hamburger flex flex-col justify-between w-5 h-4 cursor-pointer mr-4 transition duration-300 ease-in-out"
@@ -76,23 +82,22 @@ const Navbar = () => {
             height={100}
           />
           <div className="right flex item-center justify-evenly my-auto mt-4">
+            <span className="text-sm font-light mr-2 mt-1">
+              Hello, {session ? `${session?.user?.email}` : "Not Signed In"}
+            </span>
             <div>
               <Search className="mx-2 text-3xl" />
             </div>
             <div>
               <Bookmark className="mx-2 text-3xl" />
             </div>
-            <div className="flex ">
-              <AccountCircle className="mx-2 text-3xl" />
-            </div>
-            <div className="flex mr-7">
-              <ArrowDropDown
+            <div className="flex mr-4 mt-1">
+              <AccountCircle
+                className="mx-2 text-3xl relative hover:cursor-pointer"
                 onClick={() => setShowDrop(!showDrop)}
-                className="relative hover:cursor-pointer"
               />
-
-              <div
-                className={`flex w-36 text-right p-2 rounded-sm pl-8 flex-col absolute top-[70px] right-10 bg-black  font-semibold backdrop-blur-md text-sm shadow-2xl transition duration-300 ease-in-out ${
+              <span
+                className={`flex w-36 text-right p-2 rounded-sm pl-8 flex-col absolute top-[70px] right-4 bg-black  font-semibold backdrop-blur-md text-sm shadow-2xl transition duration-300 ease-in-out ${
                   showDrop ? "opacity-70" : "opacity-0"
                 }`}
               >
@@ -105,7 +110,7 @@ const Navbar = () => {
                 <button className=" transition inline duration-300 ease-out hover:text-gray-400 cursor-pointer">
                   SETTINGS
                 </button>
-              </div>
+              </span>
             </div>
           </div>
         </div>
