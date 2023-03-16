@@ -1,5 +1,4 @@
 import { apiData, dragonData, launchPad, mediaData } from "./types";
-import videoData from "../data/videos.json";
 
 export async function fetchSpaceXAPILaunch() {
   const data = await fetch("https://api.spacexdata.com/v4/launchpads");
@@ -45,14 +44,16 @@ export async function fetchSpaceXAPIDragon() {
   });
 
   // console.log(dragons);
-
   return dragons;
 }
 
 export async function fetchSpaceXAPIMedia() {
-  const data = videoData;
+  const data = await fetch(
+    `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCtI0Hodo5o5dUb67FeUjDeA&maxResults=12&key=${process.env.NEXT_PUBLIC_YOUTUBE_API}`
+  );
+  const mediaRaw = await data.json();
   const mediaData: mediaData[] = new Array();
-  data.items.map((item) => {
+  mediaRaw.items.map((item: typeof mediaRaw) => {
     mediaData.push({
       videoId: item.id.videoId,
       title: item.snippet.title,
@@ -62,7 +63,18 @@ export async function fetchSpaceXAPIMedia() {
     });
   });
 
-  // console.log(mediaData);
-
   return mediaData;
+}
+
+export async function fetchSpaceXVideo(videoId: string) {
+  try {
+    const data = await fetch(
+      `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API}`
+    );
+
+    const videoData = await data.json();
+    return videoData.items[0];
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -1,9 +1,4 @@
-import {
-  AccountCircle,
-  ArrowDropDown,
-  Bookmark,
-  Search,
-} from "@mui/icons-material";
+import { AccountCircle, Bookmark, Search } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,7 +9,7 @@ type NavItems = "HOME" | "LAUNCHES" | "DATA" | "ROADSTER";
 const NavProps: NavItems[] = ["HOME", "LAUNCHES", "DATA", "ROADSTER"];
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [showDrop, setShowDrop] = useState<boolean>(false);
   const [isScroll, setIsScroll] = useState<boolean>(false);
   const [showSide, setShowSide] = useState<boolean>(false);
@@ -82,8 +77,13 @@ const Navbar = () => {
             height={100}
           />
           <div className="right flex item-center justify-evenly my-auto mt-4">
-            <span className="text-sm font-light mr-2 mt-1">
-              Hello, {session ? `${session?.user?.email}` : "Not Signed In"}
+            <span className={`text-sm font-light mr-2 mt-1 `}>
+              Hello,{" "}
+              {status === "authenticated"
+                ? `${session?.user?.email}`
+                : status === "unauthenticated"
+                ? "Not Signed In"
+                : "Please Wait"}
             </span>
             <div>
               <Search className="mx-2 text-3xl" />
@@ -91,9 +91,15 @@ const Navbar = () => {
             <div>
               <Bookmark className="mx-2 text-3xl" />
             </div>
-            <div className="flex mr-4 mt-1">
+            <div
+              className={`flex mr-4 ${
+                status === "authenticated" ? "mt-1" : ""
+              }`}
+            >
               <AccountCircle
-                className="mx-2 text-3xl relative hover:cursor-pointer"
+                className={`mx-2 text-3xl relative hover:cursor-pointer ${
+                  status === "loading" ? "animate-ping" : ""
+                }`}
                 onClick={() => setShowDrop(!showDrop)}
               />
               <span

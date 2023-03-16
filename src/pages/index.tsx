@@ -1,4 +1,3 @@
-import { signIn, useSession } from "next-auth/react";
 import Banner from "../components/banner/Banner";
 import { bannerContent } from "@/src/data/bannerContent";
 import ListSlider from "../components/listSlider/ListSlider";
@@ -37,7 +36,6 @@ type HomeProps = {
 export default function Home(props: HomeProps) {
   const { padData, bannerContent, dragonsData, mediaData } = props;
 
-  // console.log({ mediaData });
   return (
     <main>
       <Banner

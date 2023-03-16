@@ -44,12 +44,6 @@ const VideoCard = ({ mediaData, inView }: VideoCardProps) => {
       <SkeletonLoader />;
     </section>
   );
-
-  // return (
-  //   <section className="w-[200px] my-3 h-[310px] border-2 border-rose-300/25 rounded-md overflow-hidden">
-  //     <SkeletonLoader />;
-  //   </section>
-  // );
 };
 
 export default VideoCard;

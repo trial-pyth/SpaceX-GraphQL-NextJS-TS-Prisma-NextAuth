@@ -1,4 +1,3 @@
-("use client");
 import { launchPad } from "@/src/lib/types";
 import {
   ArrowBackIosOutlined,
@@ -69,7 +68,7 @@ const Launch = ({ title, launchData }: LaunchProps) => {
           {slideNumber !== 3 && (
             <ArrowForwardIosOutlined
               onClick={() => handleClick("right")}
-              className="w-[50px]  h-full cursor-pointer mr-0"
+              className="w-[50px]  h-full cursor-pointer mr-2"
             />
           )}
         </span>

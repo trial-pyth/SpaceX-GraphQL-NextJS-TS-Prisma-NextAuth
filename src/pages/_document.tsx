@@ -15,42 +15,6 @@ export default function Document() {
           href="https://fontlibrary.org//face/d-din"
           type="text/css"
         />
-        {/* <link
-          rel="preload"
-          href="/fonts/D-DIN.ttf"
-          as="font"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/D-DIN-Bold.ttf"
-          as="font"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/D-DINCondensed-Bold.ttf"
-          as="font"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/D-DINCondensed.ttf"
-          as="font"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/D-DINExp.ttf"
-          as="font"
-          crossOrigin="anonymous"
-        ></link>
-        <link
-          rel="preload"
-          href="/fonts/D-DINExp-Bold.ttf"
-          as="font"
-          crossOrigin="anonymous"
-        ></link> */}
       </Head>
       <body>
         <Main />

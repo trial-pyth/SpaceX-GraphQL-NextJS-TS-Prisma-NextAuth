@@ -16,10 +16,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const gqlInfo = (props: { queryItem: string; gqlId: string }) => {
   const { queryItem, gqlId } = props;
   return (
-    <>
-      <ExploreLayout queryItem={queryItem} />
+    <ExploreLayout queryItem={queryItem}>
       <Info />
-    </>
+    </ExploreLayout>
   );
 };
 

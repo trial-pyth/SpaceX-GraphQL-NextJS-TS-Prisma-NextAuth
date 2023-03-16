@@ -18,10 +18,4 @@ export const getSpaceXData = async (
   });
 
   return result;
-
-  //   console.log(
-  //     spacexAPI.post(`/${exploreItem}/query`, {
-  //       options: { page: options.pageParam, limit: options.limit },
-  //     })
-  //   );
 };

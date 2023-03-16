@@ -132,7 +132,6 @@ const Data = ({ queryItem }: DataProps) => {
         <div className="absolute right-[20vw] top-0 bg-gradient-to-t from-black via-slate-300 to-black w-[1px] h-screen"></div>
         <div className="absolute left-[20vw] top-0 bg-gradient-to-t from-black via-slate-300 to-black w-[1px] h-screen"></div>
       </div>
-      <Info />
     </>
   );
 };

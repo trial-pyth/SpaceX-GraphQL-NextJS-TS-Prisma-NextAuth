@@ -1,5 +1,4 @@
 import { mediaData } from "@/src/lib/types";
-// import VideoCard from "../card/VideoCard";
 import { useInView } from "react-intersection-observer";
 import VideoCard from "../card/VideoCard";
 

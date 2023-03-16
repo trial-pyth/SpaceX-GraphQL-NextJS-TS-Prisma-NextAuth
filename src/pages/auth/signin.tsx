@@ -7,7 +7,7 @@ import { useRouter } from "next/dist/client/router";
 
 const Signin = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [email, setEmail] = useState<string>("");
 
   // console.log(process.env.NEXT_PUBLIC_EMAIL_SERVER_USER);
@@ -20,7 +20,7 @@ const Signin = () => {
     signIn("email", { email, redirect: true });
   };
 
-  if (session) {
+  if (status === "authenticated") {
     {
       setTimeout(() => {
         router.push("/");
@@ -61,11 +61,12 @@ const Signin = () => {
           className="min-w-[400px] w-[400px] max-h-[500px] px-2 rounded-md flex flex-col gap-y-12 items-center justify-center bg-slate-900/95 z-50"
           onSubmit={handleSignIn}
         >
-          {session ? (
+          {status === "authenticated" && (
             <h1 className="text-2xl font-bold tracking-wider mt-11">
               You are already signed in. Redirecting...
             </h1>
-          ) : (
+          )}
+          {status === "unauthenticated" && (
             <>
               <h1 className="text-2xl font-bold tracking-wider mt-11">
                 Sign in using email
@@ -87,7 +88,7 @@ const Signin = () => {
               <button
                 type="submit"
                 disabled={email ? false : true}
-                className="bg-white font-bold text-black w-2/3 h-7 mb-11 rounded-md disabled:opacity-20
+                className="bg-white font-bold flex justify-center text-black w-2/3 h-7 mb-11 rounded-md disabled:opacity-20
                 disabled:cursor-not-allowed
                 "
               >
