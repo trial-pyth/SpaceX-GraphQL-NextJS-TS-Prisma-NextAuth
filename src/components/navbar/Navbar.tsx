@@ -1,12 +1,15 @@
-import { AccountCircle, Bookmark, Search } from "@mui/icons-material";
+import { AccountCircle, Bookmark } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import { useSession, signOut } from "next-auth/react";
-type NavItems = "HOME" | "LAUNCHES" | "DATA" | "ROADSTER";
-const NavProps: NavItems[] = ["HOME", "LAUNCHES", "DATA", "ROADSTER"];
+const NavProps: { [x: string]: string } = {
+  home: "/",
+  launches: "/explore/launches",
+  data: "/explore/crew",
+};
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -59,11 +62,15 @@ const Navbar = () => {
                 <span className="w-full  rounded-sm h-0.5 bg-white"></span>
               </div>
             )}
-            {NavProps.map((item, index) => {
+
+            {Object.keys(NavProps).map((key, index) => {
               return (
                 <span key={index}>
-                  <Link className="mx-2 hover:font-bold" href="/">
-                    {item}
+                  <Link
+                    className="mx-2 hover:font-bold"
+                    href={`${NavProps[key]}`}
+                  >
+                    {key.toUpperCase()}
                   </Link>
                 </span>
               );
@@ -85,9 +92,7 @@ const Navbar = () => {
                 ? "Not Signed In"
                 : "Please Wait"}
             </span>
-            <div>
-              <Search className="mx-2 text-3xl" />
-            </div>
+
             <div>
               <Bookmark className="mx-2 text-3xl" />
             </div>
@@ -108,12 +113,20 @@ const Navbar = () => {
                 }`}
               >
                 <button
+                  disabled={!showDrop}
                   onClick={session ? handleSignOut : handleSignIn}
-                  className="mb-2 inline transition duration-300 ease-out hover:text-gray-400 cursor-pointer"
+                  className={`mb-2 inline transition duration-300 ease-out hover:text-gray-400 ${
+                    !showDrop ? "cursor-none" : "cursor-pointer"
+                  }`}
                 >
                   {session ? "SIGN OUT" : "SIGN IN"}
                 </button>
-                <button className=" transition inline duration-300 ease-out hover:text-gray-400 cursor-pointer">
+                <button
+                  disabled={!showDrop}
+                  className={`transition inline duration-300 ease-out hover:text-gray-400 ${
+                    !showDrop ? "cursor-none" : "cursor-pointer"
+                  }`}
+                >
                   SETTINGS
                 </button>
               </span>

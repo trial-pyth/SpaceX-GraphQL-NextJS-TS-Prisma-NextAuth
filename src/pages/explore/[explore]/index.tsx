@@ -1,24 +1,20 @@
 import ExploreLayout from "@/src/layouts/ExploreLayout";
 import { QueryItemType, SideBarItems } from "@/src/lib/types";
-import type { GetStaticPropsContext } from "next";
+import type { GetServerSidePropsContext, GetStaticPropsContext } from "next";
 
-export async function getStaticPaths() {
-  return {
-    paths: SideBarItems.map((item) => {
-      return { params: { explore: item } };
-    }),
-    fallback: false,
-  };
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const queryItem = context?.params?.explore;
+
+  if (queryItem && SideBarItems.includes(queryItem as string) === true) {
+    return {
+      props: { queryItem: context?.params?.explore },
+    };
+  } else {
+    return { notFound: true };
+  }
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
-  // console.log(context.params.explore);
-  return {
-    props: { queryItem: context?.params?.explore },
-  };
-}
-
-const index = ({ queryItem }: QueryItemType) => {
+const index: React.FC<{ queryItem: QueryItemType }> = ({ queryItem }) => {
   return <ExploreLayout queryItem={queryItem} />;
 };
 

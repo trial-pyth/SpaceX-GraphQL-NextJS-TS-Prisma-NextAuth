@@ -9,12 +9,10 @@ import {
 import Dragon from "../components/dragon/Dragon";
 import { BannerData, dragonData, launchPad, mediaData } from "@/src/lib/types";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const padData: launchPad[] = await fetchSpaceXAPILaunch();
   const dragonsData: dragonData[] = await fetchSpaceXAPIDragon();
   const mediaData: mediaData[] = await fetchSpaceXAPIMedia();
-
-  // fetchSpaceXAPIMedia();
 
   return {
     props: {
@@ -23,6 +21,7 @@ export async function getServerSideProps() {
       dragonsData,
       mediaData,
     },
+    revalidate: 60,
   };
 }
 
