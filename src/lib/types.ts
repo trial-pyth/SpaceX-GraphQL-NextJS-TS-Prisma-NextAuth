@@ -63,8 +63,20 @@ export const SideBarItems = [
   "starlink",
 ];
 
-export type QueryItemType = string | string[] | undefined;
+export type QueryItemType =
+  | "crew"
+  | "launches"
+  | "landpads"
+  | "payloads"
+  | "capsules"
+  | "rockets"
+  | "ships"
+  | "starlink";
 
 export type ReactQueryItemType =
   | InfiniteData<AxiosResponse<any, any>>
   | undefined;
+
+export type GqlDataType = {
+  [key: string]: string | { [key: string]: string | { [key: string]: string } };
+};

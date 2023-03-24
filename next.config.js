@@ -3,7 +3,12 @@ const nextConfig = {
   reactStrictMode: false,
 
   images: {
-    domains: ["live.staticflickr.com", "i.imgur.com", "i.ytimg.com"],
+    domains: [
+      "live.staticflickr.com",
+      "i.imgur.com",
+      "imgur.com",
+      "i.ytimg.com",
+    ],
   },
   typescript: {
     // !! WARN !!

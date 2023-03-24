@@ -3,7 +3,7 @@ import { QueryItemType, SideBarItems } from "@/src/lib/types";
 import type { GetServerSidePropsContext, GetStaticPropsContext } from "next";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const queryItem = context?.params?.explore;
+  const queryItem = await context?.params?.explore;
 
   if (queryItem && SideBarItems.includes(queryItem as string) === true) {
     return {

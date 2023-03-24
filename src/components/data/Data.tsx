@@ -9,9 +9,13 @@ import { QueryItemType, ReactQueryItemType } from "@/src/lib/types";
 
 type DataProps = {
   queryItem?: QueryItemType;
+  gqlId?: string;
 };
 
-const Data = ({ queryItem }: DataProps) => {
+const Data: React.FC<{ queryItem?: QueryItemType; gqlId?: string }> = ({
+  queryItem,
+  gqlId,
+}) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const {
     fetchNextPage,
@@ -72,13 +76,21 @@ const Data = ({ queryItem }: DataProps) => {
           <DataMin
             ref={lastDataRef}
             key={i}
-            shortData={outputData}
-            queryItem={queryItem}
+            shortData={outputData as string[]}
+            queryItem={queryItem as string}
+            gqlId={gqlId as string}
           />
         );
       }
 
-      return <DataMin key={i} shortData={outputData} queryItem={queryItem} />;
+      return (
+        <DataMin
+          key={i}
+          shortData={outputData as string[]}
+          queryItem={queryItem as string}
+          gqlId={gqlId as string}
+        />
+      );
     });
   });
 
@@ -95,41 +107,39 @@ const Data = ({ queryItem }: DataProps) => {
   });
 
   return (
-    <>
-      <div className="ml-[20vw] min-w-[60vw] max-w-80 pb-11 max-h-[400px] mr-[20vw] overflow-hidden max-w-[500px]  flex flex-col ">
-        <div className="mx-auto search mt-6 px-auto  border-red flex w-3/4 ">
-          <span className="mx-auto my-auto bg-sky-800/80 p-2 h-full w-1/12 rounded-l-md ">
-            <Search />
-          </span>
-          <input
-            type="search"
-            className="w-full bg-slate-600/50 border-none px-3 py-2 border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-gray-400 focus:ring-gray-400 block rounded-r-md sm:text-sm focus:ring-1 "
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        {!isLoading && (
-          <span className="mx-auto text-sm text-gray-500/95">
-            Click on a row to know more
+    <div className="ml-[20vw] min-w-[55vw] max-w-80 pb-11 max-h-[400px] mr-[20vw] overflow-hidden max-w-[500px]  flex flex-col ">
+      <div className="mx-auto search mt-6 px-auto  border-red flex w-3/4 ">
+        <span className="mx-auto my-auto bg-sky-800/80 p-2 h-full w-1/12 rounded-l-md ">
+          <Search />
+        </span>
+        <input
+          type="search"
+          className="w-full bg-slate-600/50 border-none px-3 py-2 border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-gray-400 focus:ring-gray-400 block rounded-r-md sm:text-sm focus:ring-1 "
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      {!isLoading && (
+        <span className="mx-auto text-sm text-gray-500/95">
+          Click on a row to know more
+        </span>
+      )}
+
+      <div className="relative w-[90%] mt-4 rounded-lg mx-auto h-[600px] overflow-y-auto overflow-x-hidden bg-slate-600/30 justify-start flex flex-col px-3 pt-5 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-400">
+        {hasNextPage && (
+          <span className="sticky top-0 right-0 h-8 w-8 animate-bounce bg-sky-900/70 text-fuchsia-200/80 mx-auto p-1 rounded-full">
+            <span className="mx-auto">
+              <ArrowDownwardSharp />
+            </span>
           </span>
         )}
-
-        <div className="relative w-[90%] mt-4 rounded-lg mx-auto h-[600px] overflow-y-auto overflow-x-hidden bg-slate-600/30 justify-start flex flex-col px-3 pt-5 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-400">
-          {hasNextPage && (
-            <span className="sticky top-0 right-0 h-8 w-8 animate-bounce bg-sky-900/70 text-fuchsia-200/80 mx-auto p-1 rounded-full">
-              <span className="mx-auto">
-                <ArrowDownwardSharp />
-              </span>
-            </span>
-          )}
-          {isLoading && <CircularProgress className="mx-auto text-slate-400" />}
-          {render}
-        </div>
-
-        <div className="absolute right-[20vw] top-0 bg-gradient-to-t from-black via-slate-300 to-black w-[1px] h-screen"></div>
-        <div className="absolute left-[20vw] top-0 bg-gradient-to-t from-black via-slate-300 to-black w-[1px] h-screen"></div>
+        {isLoading && <CircularProgress className="mx-auto text-slate-400" />}
+        {render}
       </div>
-    </>
+
+      <div className="absolute right-[25vw] top-0 bg-gradient-to-t from-black via-slate-300 to-black w-[1px] h-screen"></div>
+      <div className="absolute left-[20vw] top-0 bg-gradient-to-t from-black via-slate-300 to-black w-[1px] h-screen"></div>
+    </div>
   );
 };
 

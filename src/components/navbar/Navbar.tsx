@@ -26,7 +26,7 @@ const Navbar = () => {
 
   const router = useRouter();
 
-  // console.log(session);
+  console.log(router);
 
   const toggleSide = () => {
     setShowSide(!showSide);
@@ -137,7 +137,7 @@ const Navbar = () => {
 
       {/* <-- SideBar --> */}
 
-      {router.pathname === "/" && <Sidebar showSide={showSide} />}
+      {!router.pathname.includes("/explore") && <Sidebar showSide={showSide} />}
     </>
   );
 };

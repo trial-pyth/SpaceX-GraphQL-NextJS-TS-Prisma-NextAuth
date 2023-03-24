@@ -2,6 +2,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import Link from "next/link";
 type BannerProps = {
   title: string;
   subTitle: string;
@@ -53,7 +54,7 @@ const Banner = ({ title, subTitle, imgUrl }: BannerProps) => {
         <h1 className="text-xl py-2 text-white font-bold">{title}</h1>
         <h3 className="text- w-1/2 py-3">{subTitle}</h3>
         <button className="bg-white rounded-md shadow-xl p-3 text-slate-900 font-bold transition duration-300 ease-out hover:bg-black  hover:text-white ">
-          EXPLORE NOW
+          <Link href="/explore/landpads">EXPLORE NOW</Link>
         </button>
       </motion.div>
     </div>

@@ -2,6 +2,7 @@ import Info from "@/src/components/info/Info";
 import ExploreLayout from "@/src/layouts/ExploreLayout";
 import type { GetServerSidePropsContext } from "next";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { QueryItemType } from "@/src/lib/types";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
@@ -17,10 +18,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const gqlInfo = (props: { queryItem: string; gqlId: string }) => {
+const gqlInfo = (props: { queryItem: QueryItemType; gqlId: string }) => {
   const { queryItem, gqlId } = props;
   return (
-    <ExploreLayout queryItem={queryItem}>
+    <ExploreLayout queryItem={queryItem} gqlId={gqlId}>
       <ApolloProvider client={client}>
         <Info queryItem={queryItem} gqlId={gqlId} />
       </ApolloProvider>

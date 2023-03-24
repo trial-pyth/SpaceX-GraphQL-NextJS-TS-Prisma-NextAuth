@@ -1,37 +1,57 @@
 ("use client");
 import SkeletonLoader from "../skeleton/SkeletonLoader";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import ErrorIcon from "@mui/icons-material/Error";
+import { LibraryAdd } from "@mui/icons-material";
 import Image from "next/image";
-import { GET_CREW } from "@/src/lib/gqlQuery";
+import { gqlQuery } from "@/src/lib/gqlQuery";
+import InfoCard from "./InfoCard";
+import { QueryItemType } from "@/src/lib/types";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
-const Info: React.FC<{ queryItem: string | undefined; gqlId: string }> = ({
+const Info: React.FC<{ queryItem: QueryItemType; gqlId: string }> = ({
   queryItem,
   gqlId,
 }) => {
-  const { loading, error, data } = useQuery(GET_CREW, {
-    variables: {
-      crewId: gqlId,
-    },
+  const queryPath = gqlQuery[queryItem as string];
+  const variables = { [`${queryItem}Id`]: gqlId };
+  const { data: session, status } = useSession();
+
+  const { loading, error, data } = useQuery(queryPath, {
+    variables,
   });
-  /**
-   * 
-  console.log({ data });
-  console.log({ error });
-  */
+
   return (
-    <div className="fixed right-0 w-[20vw] h-[calc(100vh_-_64px)]  flex flex-col flex-grow overflow-hidden overflow-y-auto">
-      <h2 className="mx-auto text-gray-500">
+    <div className="fixed right-0 w-[25vw] h-[calc(100vh_-_64px)]  flex flex-col flex-grow overflow-hidden overflow-y-auto">
+      <h2 className="mx-auto text-xs text-gray-500">
         Powered by{" "}
         <Image
           src={"/static/img/graphql.svg"}
           className="inline"
-          width="90"
-          height="45"
+          width="60"
+          height="30"
           alt="GraphQL"
         />{" "}
       </h2>
-      <p>{data?.crew?.name}</p>
       {loading && <SkeletonLoader />}
+      {error && (
+        <ErrorIcon className="text-gray-600/80 mx-auto mt-10 w-20 h-20" />
+      )}
+      {data && (
+        <>
+          <div
+            className="mx-auto text-sm cursor-pointer text-slate-400"
+            onClick={() => console.log(gqlId)}
+          >
+            <LibraryAdd /> Click to Save
+          </div>
+          <InfoCard
+            queryItem={queryItem as QueryItemType}
+            gqlData={data[Object.keys(data)[0]]}
+          />
+        </>
+      )}
     </div>
   );
 };
