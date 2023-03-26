@@ -1,9 +1,27 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession, signIn } from "next-auth/react";
-import React, { useState } from "react";
+import { useSession, signIn, getSession } from "next-auth/react";
+import React, { useState, useCallback } from "react";
 import { useRouter } from "next/dist/client/router";
+import { NextPageContext } from "next";
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      props: {},
+    };
+  }
+
+  return {
+    redirect: {
+      destination: "/saved-cards",
+      permanent: false,
+    },
+  };
+}
 
 const Signin = () => {
   const router = useRouter();
@@ -12,13 +30,24 @@ const Signin = () => {
 
   // console.log(process.env.NEXT_PUBLIC_EMAIL_SERVER_USER);
 
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSignIn = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    if (!email) return false;
+      if (!email) return false;
 
-    signIn("email", { email, redirect: true });
-  };
+      try {
+        await signIn("email", {
+          email,
+          redirect: true,
+          callbackUrl: "/saved-cards",
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [email, router]
+  );
 
   if (status === "authenticated") {
     {

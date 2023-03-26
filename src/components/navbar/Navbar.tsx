@@ -26,7 +26,7 @@ const Navbar = () => {
 
   const router = useRouter();
 
-  console.log(router);
+  // console.log(router);
 
   const toggleSide = () => {
     setShowSide(!showSide);
@@ -38,7 +38,7 @@ const Navbar = () => {
   };
 
   const handleSignOut = () => {
-    signOut({ redirect: false });
+    signOut({ redirect: true, callbackUrl: "/auth/signin" });
     setShowDrop(!showDrop);
   };
 
@@ -94,7 +94,9 @@ const Navbar = () => {
             </span>
 
             <div>
-              <Bookmark className="mx-2 text-3xl" />
+              <Link href="/saved-cards">
+                <Bookmark className="mx-2 text-3xl" />
+              </Link>
             </div>
             <div
               className={`flex mr-4 ${

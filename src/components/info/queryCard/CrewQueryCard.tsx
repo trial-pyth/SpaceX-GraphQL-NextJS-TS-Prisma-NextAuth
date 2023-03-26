@@ -6,7 +6,7 @@ const CrewQueryCard: React.FC<{
   gqlData: GqlDataType;
 }> = ({ gqlData }) => {
   return (
-    <div className="space-y-5 rounded-2xl h-max w-11/12 mx-auto bg-gray-700-900/10 py-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-400">
+    <div className="space-y-5 rounded-2xl h-max w-11/12 max-w-[250px] mx-auto bg-gray-700-900/10 py-4 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-400">
       <img
         src={gqlData.image?.toString()}
         className="object-fill h-32 w-32 bg-slate-500/20 rounded-full mx-auto"
