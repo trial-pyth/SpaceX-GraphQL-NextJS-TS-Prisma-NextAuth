@@ -36,21 +36,23 @@ const SavedList = () => {
       <span className="text-3xl font-normal">My Saved Cards</span>
       <div className="text-gray-400 text-2xl">{user?.email}</div>
       <div className="grid-grid-cols-6 gap-4 mx-auto">
-        {savedCards?.map(
-          async (card: {
-            id: string;
-            gqlId: string;
-            queryItem: QueryItemType;
-          }) => {
-            const queryPath = gqlQuery[card.queryItem];
-            const variables = { [`${card.queryItem}Id`]: card.gqlId };
-            const { loading, error, data } = await useQuery(queryPath, {
-              variables,
-            });
+        {isLoading && <CircularProgress className="mx-auto text-slate-400" />}
+        {/* {savedCards.length &&
+          savedCards?.map(
+            async (card: {
+              id: string;
+              gqlId: string;
+              queryItem: QueryItemType;
+            }) => {
+              const queryPath = gqlQuery[card.queryItem];
+              const variables = { [`${card.queryItem}Id`]: card.gqlId };
+              const { loading, error, data } = await useQuery(queryPath, {
+                variables,
+              });
 
-            return <CrewQueryCard gqlData={data[Object.keys(data)[0]]} />;
-          }
-        )}
+              return <CrewQueryCard gqlData={data[Object.keys(data)[0]]} />;
+            }
+          )} */}
       </div>
     </div>
   );
